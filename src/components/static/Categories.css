@@ -1,0 +1,13 @@
+.i {
+  color: white;
+  background-color: black !important;
+/*   Apply transition to property */
+  transition-property: background-color;
+/*   Span of time from intial state to final */
+  transition-duration: 1000ms !important;
+  /* transition: all .2 linear !important; */
+}
+.i:hover {
+  background-color: #cc0066 !important;
+  /* transition: all .2 linear !important; */
+}
