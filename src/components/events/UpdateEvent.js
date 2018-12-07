@@ -1,25 +1,26 @@
 
 import { connect } from 'react-redux'
-import { addEvent } from '../../actions/events'
+import { updateEvent } from '../../actions/events'
 import React, { Component } from 'react'
 import DatePicker from "react-datepicker";
-import { bindActionCreators } from 'redux';
+// import { bindActionCreators } from 'redux';
+
+import { genres } from './constants';
 
 import "react-datepicker/dist/react-datepicker.css";
 
 import { Button, Form, Dropdown } from 'semantic-ui-react'
-import { genres } from './constants'
 
-class AddEvent extends Component {
 
-  state = {
-    startDate: new Date(),
-    users_id: 1,
-    title: "",
-    category: "house",
-    description: "",
-    location: "",
-    image: "https://images.unsplash.com/photo-1508538462346-c1704d77178b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80"
+
+class UpdateEvent extends Component {
+
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      ...props.event,
+    }
   }
 
   handleChange = (date) => {
@@ -31,26 +32,27 @@ class AddEvent extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault()
-    console.log(this.state.users_id)
+
     let { title, category, description, startDate: date_time, users_id, image, location } = this.state
     let payload = { title, category, description, date_time, users_id, image, location }
     console.log(payload)
-    this.props.updateEvent(payload)
+    this.props.onEditSubmit(payload)
 
   }
 
   render() {
+
     return (
       <div>
         <Form onSubmit={this.handleSubmit}>
 
           <Form.Field>
             <label>Event Title</label>
-            <input onChange={(e) => this.setState({ title: e.target.value })} placeholder='Event Title' />
+            <input defaultValue={this.state.title} onChange={(e) => this.setState({ title: e.target.value })} placeholder='Event Title' />
           </Form.Field>
           <Form.Field>
             <label>Event Image</label>
-            <input onChange={(e) => this.setState({ image: e.target.value })} type="url" placeholder='Photo' />
+            <input defaultValue={this.state.image} onChange={(e) => this.setState({ image: e.target.value })} type="url" placeholder='Photo' />
           </Form.Field>
           <Form.Field>
             <label>Category</label>
@@ -67,7 +69,7 @@ class AddEvent extends Component {
           </Form.Field>
           <Form.Field>
             <label>Location</label>
-            <input onChange={(e) => this.setState({ location: e.target.value })} placeholder='Location' />
+            <input defaultValue={this.state.location} onChange={(e) => this.setState({ location: e.target.value })} placeholder='Location' />
           </Form.Field>
 
           <Form.TextArea onChange={(e) => this.setState({ description: e.target.value })} label='Description' placeholder='Tell us more about your...' />
@@ -80,8 +82,6 @@ class AddEvent extends Component {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return { addEvent: bindActionCreators(addEvent, dispatch) }
-}
-
-export default connect(null, mapDispatchToProps)(AddEvent)
+export default connect(null, {
+  updateEvent
+})(UpdateEvent)

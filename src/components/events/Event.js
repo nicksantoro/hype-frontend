@@ -1,6 +1,13 @@
 import React, { Component } from 'react'
-import { Card, Icon, Image, Loader, Transition } from 'semantic-ui-react'
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux'
+import { Card, Icon, Image, Loader, Transition, Button, Modal, Header } from 'semantic-ui-react'
+import Moment from 'react-moment'
 import './Event.css'
+import { deleteEvent } from '../../actions/events'
+import { updateEvent } from '../../actions/events'
+
+import UpdateEvent from './UpdateEvent'
 
 const extra = (
   <a>
@@ -21,37 +28,55 @@ class Event extends Component {
     this.setState({ visible: !this.state.visible })
   }
 
+  handleDelete = () => {
+    this.props.deleteEvent(this.props.event.id)
+  }
+
+  handleUpdate = (eventUpdates) => {
+    this.props.updateEvent(this.props.event.id, eventUpdates)
+  }
+
   render() {
 
     let { title, description, image, date_time } = this.props.event;
 
     return !this.props.event ? <Loader active /> : (
 
-      <Card fluid>
+      <Card fluid raised link>
         {/* <Image src={image} /> */}
         <Card.Content>
           <Card.Header>{title}</Card.Header>
           <Card.Meta>
-            <span className='date'>{date_time}</span>
+            <Moment className="datetime" format="MMM D YYYY HH:mm" withTitle>{date_time}</Moment> <br />
+            <Moment fromNow>{date_time}</Moment>
           </Card.Meta>
           <Card.Description>{description}</Card.Description>
         </Card.Content>
         <Card.Content extra>
 
           <Transition animation="pulse" duration={200} visible={this.state.visible}>
-
             <Icon size="big" onClick={this.toggleVisibility} className="heart" name='heart' />
-
-
           </Transition>
+          <Button onClick={this.handleDelete} inverted color="red" ><Icon name='delete' />Delete</Button>
+          <Modal trigger={<Button color="blue">Show Modal</Button>}>
+            <Modal.Header>Select a Photo</Modal.Header>
+            <Modal.Content image>
+
+              <UpdateEvent event={this.props.event} onEditSubmit={this.handleUpdate} />
+
+            </Modal.Content>
+          </Modal>
         </Card.Content>
       </Card>
     )
-
-
   }
-
-
 }
 
-export default Event
+const mapDispatchToProps = (dispatch) => {
+  return {
+    deleteEvent: bindActionCreators(deleteEvent, dispatch),
+    updateEvent: bindActionCreators(updateEvent, dispatch)
+  }
+}
+
+export default connect(null, mapDispatchToProps)(Event)
