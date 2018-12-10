@@ -7,6 +7,7 @@ class EventList extends Component {
   render() {
     let { events } = this.props
     let eventList = events.map(event => {
+      console.log(event)
       return (
         <div><Event key={event.id} event={event} /></div>
       )

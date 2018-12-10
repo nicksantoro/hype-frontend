@@ -12,6 +12,7 @@ export const fetchEvents = () => {
     try {
       const response = await fetch('http://localhost:3000/events')
       const events = await response.json()
+      console.log(events)
       dispatch({
         type: FETCH_EVENTS_SUCCESS,
         payload: events

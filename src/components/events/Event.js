@@ -44,11 +44,12 @@ class Event extends Component {
 
 
     let { title, description, image, date_time, likes } = this.props.event;
+    console.log(likes)
 
     return !this.props.event ? <Loader active /> : (
 
       <Card fluid raised link className="margin">
-        {/* <Image src={image} /> */}
+        <Image src={image} />
         <Card.Content>
           <Card.Header>{title}</Card.Header>
           <Card.Meta>
