@@ -45,10 +45,10 @@ class App extends Component {
 
         <Router>
           <Layout>
-            <Route exact path='/' component={SignInSignUp} />
+            <Route exact path='/SignInSignUP' component={SignInSignUp} />
             <Route exact path="/signin" component={SignIn} />
             <Route exact path="/signup" component={SignUp} />
-            <Route exact path="/home" component={Home} />
+            <Route exact path="/" component={Home} />
           </Layout>
         </Router>
       </div>
