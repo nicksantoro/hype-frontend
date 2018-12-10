@@ -80,7 +80,6 @@ class AddEvent extends Component {
   }
 }
 
-
 const mapDispatchToProps = dispatch => bindActionCreators({
   addEvent
 }, dispatch);
