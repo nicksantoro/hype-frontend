@@ -16,7 +16,7 @@ class AddEvent extends Component {
     startDate: new Date(),
     users_id: 1,
     title: "",
-    category: "house",
+    category: "House",
     description: "",
     location: "",
     image: "https://images.unsplash.com/photo-1508538462346-c1704d77178b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80"
@@ -31,11 +31,11 @@ class AddEvent extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault()
-    console.log(this.state.users_id)
+    console.log(this.state)
     let { title, category, description, startDate: date_time, users_id, image, location } = this.state
     let payload = { title, category, description, date_time, users_id, image, location }
     console.log(payload)
-    this.props.updateEvent(payload)
+    this.props.addEvent(payload)
 
   }
 
@@ -46,15 +46,15 @@ class AddEvent extends Component {
 
           <Form.Field>
             <label>Event Title</label>
-            <input onChange={(e) => this.setState({ title: e.target.value })} placeholder='Event Title' />
+            <input onChange={(e) => this.setState({ title: e.target.value })} value={this.state.title} placeholder='Event Title' />
           </Form.Field>
           <Form.Field>
             <label>Event Image</label>
-            <input onChange={(e) => this.setState({ image: e.target.value })} type="url" placeholder='Photo' />
+            <input onChange={(e) => this.setState({ image: e.target.value })} value={this.state.image} type="url" placeholder='Photo' />
           </Form.Field>
           <Form.Field>
             <label>Category</label>
-            <Dropdown onChange={(e) => this.setState({ category: e.target.value })} placeholder='Select Genre' fluid search selection options={genres} />
+            <Dropdown onChange={(c, e) => this.setState({ category: e.value })} placeholder='Select Genre' fluid search selection options={genres} />
           </Form.Field>
           <Form.Field>
             <label>Date</label>
@@ -67,10 +67,10 @@ class AddEvent extends Component {
           </Form.Field>
           <Form.Field>
             <label>Location</label>
-            <input onChange={(e) => this.setState({ location: e.target.value })} placeholder='Location' />
+            <input onChange={(e) => this.setState({ location: e.target.value })} value={this.state.location} placeholder='Location' />
           </Form.Field>
 
-          <Form.TextArea onChange={(e) => this.setState({ description: e.target.value })} label='Description' placeholder='Tell us more about your...' />
+          <Form.TextArea onChange={(e) => this.setState({ description: e.target.value })} value={this.state.description} label='Description' placeholder='Tell us more about your...' />
 
           <Button type='submit'>Submit</Button>
 
@@ -80,8 +80,9 @@ class AddEvent extends Component {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return { addEvent: bindActionCreators(addEvent, dispatch) }
-}
+
+const mapDispatchToProps = dispatch => bindActionCreators({
+  addEvent
+}, dispatch);
 
 export default connect(null, mapDispatchToProps)(AddEvent)

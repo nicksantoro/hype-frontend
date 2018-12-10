@@ -4,8 +4,8 @@ import { connect } from 'react-redux'
 import { Card, Icon, Image, Loader, Transition, Button, Modal, Header } from 'semantic-ui-react'
 import Moment from 'react-moment'
 import './Event.css'
-import { deleteEvent } from '../../actions/events'
-import { updateEvent } from '../../actions/events'
+import { deleteEvent, updateEvent, addLike } from '../../actions/events'
+
 
 import UpdateEvent from './UpdateEvent'
 
@@ -24,8 +24,8 @@ class Event extends Component {
   }
 
   toggleVisibility = () => {
-    console.log("hey pulse")
     this.setState({ visible: !this.state.visible })
+    this.props.addLike(this.props.event.id)
   }
 
   handleDelete = () => {
@@ -33,16 +33,21 @@ class Event extends Component {
   }
 
   handleUpdate = (eventUpdates) => {
+
     this.props.updateEvent(this.props.event.id, eventUpdates)
   }
 
+
+
   render() {
 
-    let { title, description, image, date_time } = this.props.event;
+
+
+    let { title, description, image, date_time, likes } = this.props.event;
 
     return !this.props.event ? <Loader active /> : (
 
-      <Card fluid raised link>
+      <Card fluid raised link className="margin">
         {/* <Image src={image} /> */}
         <Card.Content>
           <Card.Header>{title}</Card.Header>
@@ -55,10 +60,14 @@ class Event extends Component {
         <Card.Content extra>
 
           <Transition animation="pulse" duration={200} visible={this.state.visible}>
-            <Icon size="big" onClick={this.toggleVisibility} className="heart" name='heart' />
+            <Icon size="big" onClick={this.toggleVisibility} id="heart" name='heart' />
           </Transition>
+
+          <Button basic color='black' content='Black'>{likes}</Button>
+
           <Button onClick={this.handleDelete} inverted color="red" ><Icon name='delete' />Delete</Button>
-          <Modal trigger={<Button color="blue">Show Modal</Button>}>
+
+          <Modal basic trigger={<Button inverted color="violet">Edit Event</Button>}>
             <Modal.Header>Select a Photo</Modal.Header>
             <Modal.Content image>
 
@@ -75,7 +84,8 @@ class Event extends Component {
 const mapDispatchToProps = (dispatch) => {
   return {
     deleteEvent: bindActionCreators(deleteEvent, dispatch),
-    updateEvent: bindActionCreators(updateEvent, dispatch)
+    updateEvent: bindActionCreators(updateEvent, dispatch),
+    addLike: bindActionCreators(addLike, dispatch)
   }
 }
 

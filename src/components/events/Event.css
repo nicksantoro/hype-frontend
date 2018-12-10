@@ -1,5 +1,10 @@
-.heart {
+#heart {
   
   color: red !important;
 }
   
+
+.margin {
+  margin-bottom:10px !important;
+  margin-top:10px !important;
+}

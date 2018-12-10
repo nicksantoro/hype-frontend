@@ -2,6 +2,10 @@ export const FETCH_EVENTS_SUCCESS = "FETCH_EVENTS_SUCCESS"
 export const ADD_EVENT_SUCCESS = "ADD_EVENT_SUCCESS"
 export const DELETE_EVENT_SUCCESS = "DELETE_EVENT_SUCCESS"
 export const UPDATE_EVENT_SUCCESS = "UPDATE_EVENT_SUCCESS"
+export const FILTER_EVENTS = "FILTER_EVENTS"
+export const ADD_LIKE_SUCCESS = "ADD_LIKE_SUCCESS"
+export const ADD_LIKE_FAILURE = "ADD_LIKE_FAILURE"
+export const ADD_LIKE = "ADD_LIKE"
 
 export const fetchEvents = () => {
   return async dispatch => {
@@ -78,7 +82,6 @@ export const updateEvent = (id, payload) => {
       dispatch({
         type: UPDATE_EVENT_SUCCESS,
         payload: result[0],
-        id
       })
     }
     catch (error) {
@@ -86,6 +89,37 @@ export const updateEvent = (id, payload) => {
     }
   }
 };
+
+export const filterEvents = (category) => {
+  return dispatch => {
+    return dispatch({
+      type: FILTER_EVENTS,
+      payload: category
+    })
+  }
+}
+
+
+export const addLike = (eventId) => {
+  return async dispatch => {
+    try {
+      let response = await fetch(`http://localhost:3000/events/${eventId}/like`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+
+      let event = await response.json();
+      console.log(event)
+      dispatch({ type: ADD_LIKE_SUCCESS, payload: eventId })
+    }
+    catch (error) {
+      console.log(error)
+    }
+  }
+};
+
 
 
 

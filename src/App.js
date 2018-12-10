@@ -4,11 +4,14 @@ import './App.css';
 // import Categories from './components/static/Categories'
 import NavBar from './components/static/NavBar'
 // import Div from './components/static/Divider'
-import SignInSignUp from './components/SignInSignUp'
+import SignInSignUp from './components/SignIn/SignInSignUp'
 // import Title from './components/static/Title'
 // import EventList from './components/events/EventList'
 import Home from './components/main/Home'
-import NavTop from './components/static/NavTop'
+import SignIn from './components/SignIn/SignIn'
+import SignUp from './components/SignIn/SignUp'
+import Layout from './components/Layout'
+import { connect } from 'react-redux'
 
 // import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
@@ -31,28 +34,43 @@ class App extends Component {
     ]
   }
 
+  // componentDidMount() {
+  //   this.props.dispatch()
+  // }
+
   render() {
     return (
-      <Router>
-        <div className="App">
 
-          <Container centered>
-            <NavBar />
-            <Route exact path="/" component={Home} />
+      <div className="App">
 
+        <Router>
+          <Layout>
+            <Route exact path='/' component={SignInSignUp} />
+            <Route exact path="/signin" component={SignIn} />
+            <Route exact path="/signup" component={SignUp} />
+            <Route exact path="/home" component={Home} />
+          </Layout>
+        </Router>
+      </div>
 
-
-            <Route exact path='/SignInSignUp' component={SignInSignUp} />
-
-
-          </Container>
-        </div>
-
-      </Router>
     );
   }
 }
 
-export default App;
 
 
+export default connect((state) => {
+  return {
+    isAuthenticated: !!state.auth.user
+  }
+})(App);
+
+
+// addHeadersToRequest = () => {
+//   fetch('/getsomething', {
+//     headers: {
+//       'x-access-token' : localStorage.getItem('token')
+//     }
+//     body: JSON.stringify({toppings: []})
+//   })
+// }

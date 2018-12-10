@@ -1,5 +1,5 @@
 import React from 'react'
-import { Form, Input } from 'semantic-ui-react'
+import { Form, Input, Button } from 'semantic-ui-react'
 
 const SignUp = () => (
   <Form>
@@ -19,7 +19,10 @@ const SignUp = () => (
       <label>Password</label>
       <Input type="password" placeholder='password' />
     </Form.Field>
+    <Button type='submit'>Submit</Button>
   </Form>
+
+
 )
 
 export default SignUp

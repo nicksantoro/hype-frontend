@@ -3,6 +3,7 @@ import Event from './Event'
 import { connect } from 'react-redux'
 
 class EventList extends Component {
+
   render() {
     let { events } = this.props
     let eventList = events.map(event => {
@@ -12,7 +13,7 @@ class EventList extends Component {
     })
     return (
       <div>
-        <div className="ui fluid container">
+        <div className="ui fluid container" style={{ marginTop: "4em" }}>
           <div className="column">
 
             {eventList}
@@ -25,7 +26,7 @@ class EventList extends Component {
 }
 
 const mapStateToProps = (state) => {
-  return { events: state.events.data }
+  return { events: state.events.displayedEvents }
 }
 
 export default connect(mapStateToProps, null)(EventList)
