@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Form } from 'semantic-ui-react'
+import { Button, Form, Container } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 // import { LOGIN_SUCCESS } from '../../actions/auth';
 import { loginAttempt } from '../../actions/auth';
@@ -9,9 +9,6 @@ class SignIn extends React.Component {
   constructor() {
     super()
     this.state = {
-      firstName: "",
-      lastName: "",
-      username: "",
       email: "",
       password: "",
       messages: ["Hello World"]
@@ -19,8 +16,9 @@ class SignIn extends React.Component {
   }
 
   onclick() {
-    const { firstName, lastName, email, username, password } = this.state;
-    this.props.dispatch(loginAttempt(firstName, lastName, email, username, password))
+    const { email, password } = this.state;
+    this.props.dispatch(loginAttempt({ email, password }))
+    this.props.history.push("/")
   }
 
   onChange(key, evt) {
@@ -33,33 +31,26 @@ class SignIn extends React.Component {
 
     return (
 
-      <Form>
-        {(() => {
-          return this.state.messages.map((m) => <div>{m}</div>)
-        })()}
-        <Form.Field>
-          <label>First Name</label>
-          <input onChange={(e) => this.onChange("firstName", e)} value={this.state.firstName} placeholder='First Name' />
-        </Form.Field>
-        <Form.Field>
-          <label>Last Name</label>
-          <input onChange={(e) => this.onChange("lastName", e)} value={this.state.lastName} placeholder='Last Name' />
-        </Form.Field>
-        <Form.Field>
-          <label>Username</label>
-          <input onChange={(e) => this.onChange("username", e)} value={this.state.username} placeholder='Username Name' />
-        </Form.Field>
-        <Form.Field>
-          <label>Email</label>
-          <input onChange={(e) => this.onChange("email", e)} value={this.state.email} type="email" placeholder='Email' />
-        </Form.Field>
-        <Form.Field>
-          <label>Password</label>
-          <input onChange={(e) => this.onChange("password", e)} value={this.state.password} placeholder='Password' />
-        </Form.Field>
+      <Container text>
 
-        <Button onClick={this.onclick.bind(this)} type='submit'>Submit</Button>
-      </Form>
+        <Form>
+          {(() => {
+            return this.state.messages.map((m) => <div>{m}</div>)
+          })()}
+
+          <Form.Field>
+            <label>Email</label>
+            <input type="email" onChange={(e) => this.onChange("email", e)} value={this.state.email} type="email" placeholder='Email' />
+          </Form.Field>
+          <Form.Field>
+            <label>Password</label>
+            <input type="password" onChange={(e) => this.onChange("password", e)} value={this.state.password} placeholder='Password' />
+          </Form.Field>
+
+          <Button onClick={this.onclick.bind(this)} type='submit'>Submit</Button>
+        </Form>
+
+      </Container>
 
     )
   }
