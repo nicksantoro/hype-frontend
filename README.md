@@ -1,10 +1,21 @@
 # HYPE
 
-Hype is a music concert event app that allows users to create events and hype them up with "likes".
+# Hype is a music concert event app that allows users to create events and hype them up with "likes".
+
+# Upcoming Features!
+
+  - Join events
+  - Share and send invites to other users
+  - Follow users
 
 ![screenshot two](screenshots/2.png)
-Events are sorted by the number of likes
+
+# Events are sorted by the number of likes
+
 ![screenshot three](screenshots/3.png)
+
 ![screenshot four](screenshots/4.png)
-Set event details including date and category (music genre)
+
+# Set event details including date and category (music genre)
+
 ![screenshot five](screenshots/5.png)
